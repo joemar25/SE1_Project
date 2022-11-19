@@ -21,4 +21,6 @@ Folders
  sudo apt install portaudio19-dev
  pip install pyaudio
  
+grammarly suggestion video (rant) : https://www.youtube.com/watch?v=Q5rB9jDbTPU&ab_channel=ZoeBee
+
  -->
