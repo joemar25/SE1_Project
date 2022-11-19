@@ -30,6 +30,10 @@
         note: we will use wav since it is easier to work with in python
 
               importing wave requires no installation (it is pre-build)
+
+        before loading some data in a wave file, we need to understand some parameters
+        before loading some data in a wave file, we need to understand some parameters
+
 '''
 
-# import wave
+import wave
