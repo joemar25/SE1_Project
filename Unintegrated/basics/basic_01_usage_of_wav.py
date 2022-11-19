@@ -73,10 +73,11 @@ t_audio_in_sec = nframe / frate
 print(f'\naudio time in secs: {t_audio_in_sec}')
 
 # get actual frames
+# -1 means get all the frames
 frames = audio.readframes(-1)
 print(f'frames object       : {type(frames)}')  # class is bytes
-print(f'frame first byte    : {type(frames[0])}')  # extract 1st bytes
-
+# extract 1st bytes
+print(f'frame first byte    : {type(frames[0])}')
 print(f'frames length       : {len(frames)}')
 
 # len(frame) --> not same as the number of frames (nframes) since it is twice as much
