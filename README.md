@@ -9,5 +9,11 @@ Folders
 - Integrated (test)
   - a folder contains the (unintegrated python final codes) that is implemented on the web
 
-<!-- https://stackoverflow.com/questions/74394845/failed-building-wheel-for-pyaudio-m1-chip
+<!-- 
+  help this guy : https://stackoverflow.com/questions/74394845/failed-building-wheel-for-pyaudio-m1-chip
+  
+  - sudo apt update
+  - sudo apt install portaudio19-dev
+  - pip install pyaudio
+ 
  -->
