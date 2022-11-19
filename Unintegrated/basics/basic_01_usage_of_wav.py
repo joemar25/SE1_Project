@@ -52,7 +52,9 @@
 import wave
 
 # read binary
-audio = wave.open('/workspaces/SE1_Project//audio/sample_mar1.wav', 'rb')
+# file = '/workspaces/SE1_Project/audio/sample_mar1.wav'
+file = './audio/sample_mar1.wav'
+audio = wave.open(file, 'rb')
 
 # set in variables
 channels = audio.getnchannels()
@@ -100,8 +102,9 @@ print(f'frames length / {divisor}   : {len(frames)/divisor}')
 # to save data again
 
 # write binary
-new_audio = wave.open(
-    '/workspaces/SE1_Project//audio/sample_mar1_duplicate.wav', 'wb')
+# new_audio = wave.open('/workspaces/SE1_Project//audio/sample_mar1_duplicate.wav', 'wb')
+file = './audio/sample_mar1_duplicate.wav'
+new_audio = wave.open(file, 'wb')
 
 # basically we need to change the getters from above to setters
 new_audio.setnchannels(channels)
