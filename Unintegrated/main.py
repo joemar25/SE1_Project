@@ -1,4 +1,5 @@
 # necessary imports for generating filename and manipulating audio file
+import whisper
 from datetime import datetime
 import pytz
 import uuid
@@ -63,3 +64,15 @@ wave_form.setsampwidth(SAMPWIDTH)
 wave_form.setframerate(RATE)
 wave_form.writeframes(FRAMES)
 wave_form.close()
+
+################################################
+model = whisper.load_model('tiny')
+
+result = model.transcribe(
+    FILE,
+    fp16=False,
+    language='English',
+    task='Translate'
+)
+
+print(result["text"])
