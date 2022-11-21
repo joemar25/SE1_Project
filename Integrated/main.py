@@ -4,8 +4,8 @@
 # check grammar
 # ...
 
-from app_functions import sum
+from app_functions import record
 
 
 if __name__ == "__main__":
-    print(sum(1, 2))
+    data = record()
