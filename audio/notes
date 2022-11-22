@@ -1,2 +1,19 @@
-1 min video takes about 10 mb with 48000 sample rate - 60s
-2 min video takes about 29.9 mb with 48000 sample rate - 120s
+1 min audio takes about 10 mb with 48000 sample rate - 60s
+2 min audio takes about 29.9 mb with 48000 sample rate - 120s
+ 
+
+
+calculate
+    words = 30
+    errors = 7
+
+    cal = (7/30)*100
+    result = 100 - cal
+
+    100% - 23.3% = 76.7%
+
+
+    50/100
+    0.5 * 100
+    50
+    100-50 = 50%

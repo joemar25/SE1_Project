@@ -38,7 +38,7 @@ stream = audio.open(
 print("start recording...")
 frames = []
 minutes = 1
-seconds = 5
+seconds = 30
 record_time = minutes * seconds
 
 # loop till frames len is same as (rate/fpb*rec_time)

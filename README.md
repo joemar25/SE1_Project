@@ -24,3 +24,12 @@ Folders
       # cmd must run (admin)
       choco install ffmpeg
     ```
+
+    ```py
+    # install whisper
+    pip install git+https://github.com/openai/whisper.git 
+    # or 
+    pip install --upgrade --no-deps --force-reinstall git+https://github.com/openai/whisper.git
+    # and
+    pip install setuptools-rust
+    ```
