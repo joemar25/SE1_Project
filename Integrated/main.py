@@ -4,8 +4,8 @@
 # check grammar
 # ...
 
-from app_functions import record
+import app_functions as app
 
 
 if __name__ == "__main__":
-    data = record()
+    app.record()

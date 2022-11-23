@@ -79,4 +79,8 @@ result = model.transcribe(
     task='Translate'
 )
 
-print(result["text"])
+text = str(result["text"])
+text = " ".join(text.split())
+text = str(text).split('.')
+
+print(text)
