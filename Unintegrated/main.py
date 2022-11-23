@@ -35,16 +35,20 @@ stream = audio.open(
     input=True
 )
 
-print("start recording...")
 frames = []
-minutes = 1
-seconds = 30
-record_time = minutes * seconds
+minutes = 5
+seconds = 60
+record_time = minutes * seconds  # this records for 5 min
 
-# loop till frames len is same as (rate/fpb*rec_time)
-for i in range(0, int(RATE / FRAMES_PER_BUFFER * record_time)):
-    data = stream.read(FRAMES_PER_BUFFER)
-    frames.append(data)
+print("start recording...")
+try:
+    # loop till frames len is same as (rate/fpb*rec_time)
+    for i in range(0, int(RATE / FRAMES_PER_BUFFER * record_time)):
+        data = stream.read(FRAMES_PER_BUFFER)
+        frames.append(data)
+
+except KeyboardInterrupt:
+    ...
 print("recording end...")
 
 # close steam and audio
