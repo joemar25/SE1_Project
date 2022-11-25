@@ -27,7 +27,7 @@ def filename_generator():
 
 
 def save_text(audio):
-    model = whisper.load_model('tiny')
+    model = whisper.load_model('medium')
 
     result = model.transcribe(
         audio,
