@@ -4,7 +4,7 @@ class Score:
         this is just a test...
     '''
 
-    def grammar(self, text_data: list, correction: list):
+    def grammar(self, text_data: list[str], correction: list[str]): 
 
         # variables
         word_count: int = 0
