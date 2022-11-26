@@ -5,8 +5,10 @@ def main():
 
     # instances
     check = Score()
-    name = File_Name()
+    generated = File_Name()
 
+    # ################################################################### #
+    
     # suppose, it is already in (clean state)
     # suppose, a raw data example
     text: list[str] = [
@@ -22,19 +24,18 @@ def main():
         'i do a lot of chores',
     ]
 
+
+    # get file names [sample]
+
+    print(f'wav file name used: {generated.wav_file_name()}')
+    print(f'txt file name used: {generated.txt_file_name()}')
+
     # ################################################################### #
 
-    # get file name for the wav
-    name = name.wav_file_name()
-
-    print(f'file name: {name}')
-
-    # ################################################################### #
-
-    # get score(s)
+    # get score(s) [sample]
     grammar_score: float = check.grammar(text, correct)
 
-    print(f'grammar score: {grammar_score}%')
+    print(f'\ngrammar score: {grammar_score}%', end='')
 
 
 if __name__ == "__main__":
