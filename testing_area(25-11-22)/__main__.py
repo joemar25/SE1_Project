@@ -8,7 +8,7 @@ def main():
     generated = File_Name()
 
     # ################################################################### #
-    
+
     # suppose, it is already in (clean state)
     # suppose, a raw data example
     text: list[str] = [
@@ -24,18 +24,19 @@ def main():
         'i do a lot of chores',
     ]
 
-
     # get file names [sample]
-
-    print(f'wav file name used: {generated.wav_file_name()}')
-    print(f'txt file name used: {generated.txt_file_name()}')
+    # print(f'wav file name used: {generated.wav_file_name()}')
+    # print(f'txt file name used: {generated.txt_file_name()}')
 
     # ################################################################### #
 
     # get score(s) [sample]
     grammar_score: float = check.grammar(text, correct)
-
     print(f'\ngrammar score: {grammar_score}%', end='')
+
+    # get pitch
+    # pitch_score: float = check.pitch('1')  # suppose audio
+    # print(f'\npitch score: {pitch_score}%', end='')
 
 
 if __name__ == "__main__":

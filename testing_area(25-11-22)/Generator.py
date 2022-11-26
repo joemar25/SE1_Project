@@ -4,6 +4,8 @@
     - Scores contain : rate (speed), pitch, articulation, prounounciation, volume
     
     - File Name : contains the generated filename. Used for saving a file.
+    
+    - Feedback
 '''
 
 import uuid
@@ -13,14 +15,23 @@ from datetime import datetime
 
 class Score:
 
+    def __word_count(self, text: list[str]) -> int:
+
+        word_count: int = 0
+
+        for a in text:
+            a = a.split(' ')
+            word_count += len(a)
+
+        return word_count
+
     def grammar(self, input_text: list[str], correct_text: list[str]) -> float:
-        '''
-        Grammar
-            Using Grammarly API
-        '''
+        # open for algorithms on checking a specific sentence is grammatically correct.
+
+        # get total number of words generated saved from text
+        word_count: int = self.__word_count(input_text)
 
         # variables
-        word_count: int = 0
         mistake: int = 0
         score: float = 0
 
@@ -30,12 +41,6 @@ class Score:
             sentence_a = sentence_a.split(' ')
             sentence_b = sentence_b.split(' ')
 
-            # get total words
-            if len(sentence_a) > len(sentence_b):
-                word_count += len(sentence_a)
-            else:
-                word_count += len(sentence_b)
-
             # estimate the mistakes
             mistake += len(set(sentence_a).difference(sentence_b))
 
@@ -43,8 +48,29 @@ class Score:
         score = 100-(mistake/word_count*100)
         return score
 
+    # original
+    # def grammar(self, input_text: list[str], correct_text: list[str]) -> float:
+    #     word_count: int = 0
+    #     mistake: int = 0
+    #     score: float = 0
+
+    #     for sentence_a, sentence_b in zip(input_text, correct_text):
+
+    #         sentence_a = sentence_a.split(' ')
+    #         sentence_b = sentence_b.split(' ')
+
+    #         if len(sentence_a) > len(sentence_b):
+    #             word_count += len(sentence_a)
+    #         else:
+    #             word_count += len(sentence_b)
+
+    #         mistake += len(set(sentence_a).difference(sentence_b))
+
+    #     score = 100-(mistake/word_count*100)
+    #     return score
+
     # speed
-    def rate(self):
+    def rate(self, text: list[str], time: float):
         '''
         Rate 
             Words / Time 
@@ -53,9 +79,21 @@ class Score:
 
             Note: Lower is Slower
                 Higher is Faster
-        '''
 
-    def pitch(self):
+            Note: A voice record must be at at least 1 min duration to calculate this
+        '''
+        ideal = {'min': 2.33, 'max': 2.67}
+        words: int = self.__word_count(text)
+        result = words / time
+        
+        if result > ideal['min'] and result < ideal['max']:
+            print('ideal')
+        elif result < ideal['min']:
+            print('slow')
+        else:
+            print('fast')
+
+    def pitch(self, audio) -> float:
         '''
         Pitch
             Male [85-180 hertz]
@@ -64,6 +102,28 @@ class Score:
             Note: this can be seen in Spectrogram's 'Y-Axis'
         '''
 
+        # test, suppose audio is none this time
+        m_hertz: list = [85, 180]  # m_hertz[0], m_hertz[1]
+        f_hertz: list = [165, 255]  # f_hertz[0], f_hertz[1]
+
+        # identify the gender voice
+        gender = self.__identify_gender(audio)
+
+        score = 0
+
+        hertz = self.__identify_hertz(gender, m_hertz[0], m_hertz[1]) if gender[0] == 'm' else self.__identify_hertz(
+            gender, f_hertz[0], f_hertz[1])
+
+        return score + hertz
+
+    def __identify_hertz(self, gender, min, max) -> int:
+        ...
+
+    def __identify_gender(self, voice) -> str:
+        # testing ..... voice must be identified before deciding the gender
+        gender = 'male' if voice == '' else 'female'
+        return gender
+
     def articulation(self):
         '''
         Articulation
@@ -71,12 +131,17 @@ class Score:
             10 - 20 consecutive syllables 
 
             Note: this is for fluent speech without pauses, MAR technique is a reliable approach for determining articulation rate.
+
+            - dependent on words & voice
+            - Using MAR (Mean Articulatory Rate)
         '''
 
     def prounounciation(self):
         '''
         Pronunciation
             Using Google Dictionary API
+
+        - dependent on words & voice
         '''
 
     def volume(self):
@@ -87,6 +152,8 @@ class Score:
             High Volume ⇒ Yellow to White
 
             Note: our group is still thinking if we are going to specify a specific speech distance when using the app
+
+        dependent on voice & spectogram
         '''
 
 
