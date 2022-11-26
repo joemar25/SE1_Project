@@ -19,9 +19,9 @@ class Score:
 
         word_count: int = 0
 
-        for a in text:
-            a = a.split(' ')
-            word_count += len(a)
+        for words in text:
+            words = words.split(' ')
+            word_count += len(words)
 
         return word_count
 
@@ -48,28 +48,18 @@ class Score:
         score = 100-(mistake/word_count*100)
         return score
 
-    # original
-    # def grammar(self, input_text: list[str], correct_text: list[str]) -> float:
-    #     word_count: int = 0
-    #     mistake: int = 0
-    #     score: float = 0
+    def __speed(self, res) -> str:
 
-    #     for sentence_a, sentence_b in zip(input_text, correct_text):
+        ideal = {'min': 2.33, 'max': 2.67}
 
-    #         sentence_a = sentence_a.split(' ')
-    #         sentence_b = sentence_b.split(' ')
+        if res > ideal['max']:
+            return 'fast'
 
-    #         if len(sentence_a) > len(sentence_b):
-    #             word_count += len(sentence_a)
-    #         else:
-    #             word_count += len(sentence_b)
+        if res < ideal['min']:
+            return 'slow'
 
-    #         mistake += len(set(sentence_a).difference(sentence_b))
+        return 'ideal'
 
-    #     score = 100-(mistake/word_count*100)
-    #     return score
-
-    # speed
     def rate(self, text: list[str], time: float):
         '''
         Rate 
@@ -82,16 +72,27 @@ class Score:
 
             Note: A voice record must be at at least 1 min duration to calculate this
         '''
-        ideal = {'min': 2.33, 'max': 2.67}
+        if time <= 0 or text[0] == '':
+            return 0
+
         words: int = self.__word_count(text)
         result = words / time
-        
-        if result > ideal['min'] and result < ideal['max']:
-            print('ideal')
-        elif result < ideal['min']:
-            print('slow')
-        else:
-            print('fast')
+        # for testing
+        speed = self.__speed(result)
+
+        result /= 2.67
+        result *= 100
+        result = result % 100 if result > 100 else result
+
+        return result
+
+    def __identify_hertz(self, gender, min, max) -> int:
+        ...
+
+    def __identify_gender(self, voice) -> str:
+        # testing ..... voice must be identified before deciding the gender
+        gender = 'male' if voice == '' else 'female'
+        return gender
 
     def pitch(self, audio) -> float:
         '''
@@ -115,14 +116,6 @@ class Score:
             gender, f_hertz[0], f_hertz[1])
 
         return score + hertz
-
-    def __identify_hertz(self, gender, min, max) -> int:
-        ...
-
-    def __identify_gender(self, voice) -> str:
-        # testing ..... voice must be identified before deciding the gender
-        gender = 'male' if voice == '' else 'female'
-        return gender
 
     def articulation(self):
         '''

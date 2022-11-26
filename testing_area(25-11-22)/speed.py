@@ -3,7 +3,8 @@ sc = Score()
 text: list[str] = [
     'my name is Joemar',
     'and i lives in my houses',  # suppose 'live' and 'house'
-    'i do a lot of chores',
+    'i do a lots',
 ]
 
-sc.rate(text, 5.653333333333333)
+r = sc.rate(text, 6)  # 5.653333333333333
+print(r)
