@@ -33,12 +33,12 @@ class Recorder:
 
     def __save_audio(self, audio, frames) -> None:
 
-        PATH: str = 'audio/dataset'
+        PATH: str = 'audio/dataset/'
         # directory cheker if exit
         self.__emptydir(PATH)
 
-        wav_file = File_Name().wav_file_name()
-        file = './audio/dataset/' + wav_file
+        wav_file = File_Name().for_wav()
+        file = PATH + wav_file
         SAMPWIDTH = audio.get_sample_size(self.__FORMAT)
         FRAMES = b''.join(frames)
 

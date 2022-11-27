@@ -160,10 +160,10 @@ class File_Name:
 
         return f"{udate}{utime}"
 
-    def wav_file_name(self) -> str:
+    def for_wav(self) -> str:
         return f'{self.__file_name()}.wav'
 
-    def txt_file_name(self) -> str:
+    def for_txt(self) -> str:
         return f'{self.__file_name()}.txt'
 
 
