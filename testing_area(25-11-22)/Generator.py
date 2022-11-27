@@ -60,7 +60,7 @@ class Score:
 
         return 'ideal'
 
-    def rate(self, text: list[str], time: float):
+    def rate(self, text: list[str], time: float) -> float:
         '''
         Rate 
             Words / Time 
@@ -114,7 +114,7 @@ class Score:
 
         return score + hertz
 
-    def articulation(self):
+    def articulation(self) -> None:
         '''
         Articulation
             Using MAR (Mean Articulatory Rate)
@@ -126,7 +126,7 @@ class Score:
             - Using MAR (Mean Articulatory Rate)
         '''
 
-    def prounounciation(self):
+    def prounounciation(self) -> None:
         '''
         Pronunciation
             Using Google Dictionary API
@@ -134,7 +134,7 @@ class Score:
         - dependent on words & voice
         '''
 
-    def volume(self):
+    def volume(self) -> None:
         '''
         Volume
             Represented by Colours
@@ -169,7 +169,8 @@ class File_Name:
 
 class Feedback:
 
-    __TOTAL: int = 6
+    # total need to return for feedback
+    __TOTAL_NEEDED: int = 6
 
     def __init__(self, grammar_score: float, rate_score: float, pitch_score: float, articulation_score: float, prounounciation_score: float, volume_score: float) -> None:
         self.scores = {
@@ -185,9 +186,9 @@ class Feedback:
         total_score = 0
         for index in self.scores:
             total_score += self.scores[index]
-        return total_score / self.__TOTAL
+        return total_score / self.__TOTAL_NEEDED
 
-    def feedback(self):
+    def feedback(self) -> None:
         score = self.scores
         total_score = self.__get_total_avg_score()
 
@@ -195,7 +196,7 @@ class Feedback:
             print(f'{score[index]}%\tfor {index} -> \tremarks: ', end='')
             print('good') if score[index] > 85 else print('bad')
 
-        print('\noverall score feedback: ', end='')
+        print(f'\noverall score feedback: {total_score} -> remarks: ', end='')
         print('good') if total_score > 85 else print('bad')
 
         # generate the words for feedback
