@@ -96,11 +96,8 @@ class Score:
 
     def pitch(self, audio) -> float:
         '''
-        Pitch
-            Male [85-180 hertz]
-            Female [165-255 hertz]
-
-            Note: this can be seen in Spectrogram's 'Y-Axis'
+        Pitch: Male [85-180 hertz] & Female [165-255 hertz]
+        Note: this can be seen in Spectrogram's 'Y-Axis'
         '''
 
         # test, suppose audio is none this time
@@ -172,7 +169,7 @@ class File_Name:
 
 class Feedback:
 
-    TOTAL: int = 6
+    __TOTAL: int = 6
 
     def __init__(self, grammar_score: float, rate_score: float, pitch_score: float, articulation_score: float, prounounciation_score: float, volume_score: float) -> None:
         self.scores = {
@@ -185,10 +182,10 @@ class Feedback:
         }
 
     def __get_total_avg_score(self) -> float:
-        generated_total = 0
+        total_score = 0
         for index in self.scores:
-            generated_total += self.scores[index]
-        return generated_total / self.TOTAL
+            total_score += self.scores[index]
+        return total_score / self.__TOTAL
 
     def feedback(self):
         score = self.scores
