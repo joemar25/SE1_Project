@@ -8,6 +8,7 @@
     - Feedback
 '''
 
+import os
 import uuid
 import pytz
 from datetime import datetime
@@ -147,26 +148,6 @@ class Score:
         '''
 
 
-# File_Name_Generator Class
-class File_Name:
-
-    def __file_name(self) -> str:
-        # uses: uuid, pytz, datetime
-        todays: datetime = datetime.now(pytz.timezone('Asia/Manila')).utcnow()
-        utime: str = f'{uuid.uuid1()}{todays.hour}{todays.minute}{todays.second}'
-
-        deduct: int = -2 if str(todays.year)[1] == '0' else -3
-        udate: str = f"{str(todays.year)[deduct:]}{todays.month}{todays.day}"
-
-        return f"{udate}{utime}"
-
-    def for_wav(self) -> str:
-        return f'{self.__file_name()}.wav'
-
-    def for_txt(self) -> str:
-        return f'{self.__file_name()}.txt'
-
-
 class Feedback:
 
     # total need to return for feedback
@@ -200,3 +181,31 @@ class Feedback:
         print('good') if total_score > 85 else print('bad')
 
         # generate the words for feedback
+
+
+class File:
+
+    def __file_name(self) -> str:
+        # uses: uuid, pytz, datetime
+        todays: datetime = datetime.now(pytz.timezone('Asia/Manila')).utcnow()
+        utime: str = f'{uuid.uuid1()}{todays.hour}{todays.minute}{todays.second}'
+
+        deduct: int = -2 if str(todays.year)[1] == '0' else -3
+        udate: str = f"{str(todays.year)[deduct:]}{todays.month}{todays.day}"
+
+        return f"{udate}{utime}"
+
+    def wav_generated_name(self) -> str:
+        return f'{self.__file_name()}.wav'
+
+    def txt_generated_name(self) -> str:
+        return f'{self.__file_name()}.txt'
+
+    def files_from_dataset(self, file_type):
+        path = 'audio/dataset/'
+        file_list = []
+        for root, dirs, files in os.walk(path):
+            for file in files:
+                if file[-3:] == file_type:
+                    file_list.append(os.path.join(root, file))
+        return file_list

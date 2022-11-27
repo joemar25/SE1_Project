@@ -1,5 +1,3 @@
-record audio
-save audio
-save text from audio
-analysis by calculating scores
-send feedback by getting the scores
+my name is Joemar
+and i lives in my houses
+i do a lot of chores

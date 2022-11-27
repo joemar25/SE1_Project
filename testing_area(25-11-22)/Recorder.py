@@ -1,4 +1,4 @@
-from Generator import File_Name
+from Generator import File
 import whisper
 import pyaudio
 import wave
@@ -57,7 +57,7 @@ class Recorder:
         # directory cheker if exit
         self.__emptydir(PATH)
 
-        wav_file = File_Name().for_wav()
+        wav_file = File().wav_generated_name()
         file = PATH + wav_file
         SAMPWIDTH = audio.get_sample_size(self.__FORMAT)
         FRAMES = b''.join(frames)
