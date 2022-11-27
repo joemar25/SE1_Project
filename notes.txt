@@ -1,0 +1,74 @@
+I have used my bu account for grammarly : https://developer.grammarly.com/
+ref: https://www.youtube.com/watch?v=mbV7gIsFOi0&ab_channel=BhaveshBhatt
+
+https://app.assemblyai.com/signup
+joemar00
+062520Joemar
+
+voice recognition: https://www.youtube.com/watch?v=GluSLXFGfJ8&ab_channel=ParwizForogh
+                 : https://www.youtube.com/watch?v=AWvsXxDtEkU&t=351s&ab_channel=ProgrammingHero
+                 : https://realpython.com/python-speech-recognition/
+
+                 to implement
+                 .. https://www.simplilearn.com/tutorials/python-tutorial/speech-recognition-in-python
+
+test grammar: pip install gingerit    -> https://pypi.org/project/gingerit/
+            : https://www.youtube.com/watch?v=mbV7gIsFOi0&ab_channel=BhaveshBhatt
+
+deep learning: https://www.youtube.com/watch?v=YereI6Gn3bM&ab_channel=TheA.I.Hacker-MichaelPhi
+
+
+
+
+
+
+PROBLEMS:
+    getting the silent (hmmm, uhummm, .....) for speech to text 
+
+
+help this guy : https://stackoverflow.com/questions/74394845/failed-building-wheel-for-pyaudio-m1-chip
+    - sudo apt update
+    - sudo apt install portaudio19-dev . https://cloudlinuxtech.com/unable-to-locate-package-fix/ then https://techoverflow.net/2019/08/05/how-to-fix-pyaudio-fatal-error-portaudio-h-no-such-file-or-directory/
+    - pip install pyaudio . then do this
+
+    summary
+    - optional pip cache purge
+    sudo apt update
+    sudo apt install portaudio19-dev
+    pip install pyaudio
+
+grammarly suggestion video (rant)
+https://www.youtube.com/watch?v=Q5rB9jDbTPU&ab_channel=ZoeBee
+
+why open source?
+https://www.youtube.com/watch?v=83-oicTOL70&ab_channel=AssemblyAI
+
+dataset?
+https://www.youtube.com/watch?v=ZqpSb5p1xQo&ab_channel=MedallionDataScience
+
+will we use whisper ai?
+https://www.youtube.com/watch?v=OCBZtgQGt1I&ab_channel=sentdex
+ - paralization for gpu and vram in ai?
+whisper demo
+https://www.youtube.com/watch?v=Ph6K_0ttsSc&ab_channel=MentalOutlaw
+
+
+pip cache purge
+# sudo apt update
+# sudo apt install portaudio19-dev
+pip install torch
+
+python -m pip install –-upgrade pip
+pip install pyaudio
+pip install torch
+
+anaconda saver: https://www.youtube.com/watch?v=WkmXN0EIhyo&ab_channel=OpenSourceOptions
+anaconda lib installation: https://www.youtube.com/watch?v=EI_xyppkWCA&ab_channel=CodeTute
+
+pyaudio to librosa
+https://librosa.org/doc/latest/index.html
+
+custom grammar checker: https://www.youtube.com/watch?v=LEA3TDV98zE&ab_channel=LearnFromVicky
+
+sample speech: https://blog.thepensters.com/example-speech-text/
+

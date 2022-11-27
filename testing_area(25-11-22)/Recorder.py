@@ -1,7 +1,5 @@
 from Generator import File_Name
 import whisper
-import pytz
-import uuid
 import pyaudio
 import wave
 import os
@@ -25,11 +23,33 @@ class Recorder:
         if(not (directory and not directory.isspace())):
             return
 
-        path = ''
+        _path = ''
         for dir in directory.split('/'):
-            path += dir+'/'
-            if os.path.isdir(path) == False:
-                os.mkdir(path)
+            _path += dir+'/'
+            if os.path.isdir(_path) == False:
+                os.mkdir(_path)
+
+    def __save_text(self, audio) -> None:
+        model = whisper.load_model('tiny')
+
+        # result = model.transcribe(
+        #     audio,
+        #     fp16=False,
+        #     language='English',
+        #     task='Translate'
+        # )
+
+        # text = str(result["text"])
+        # text = str(text).split('.')
+
+        # file = audio[:-4]+'.txt'
+
+        # # save
+        # with open(file, 'w') as f:
+        #     for line in text:
+        #         if line != '':
+        #             line = ' '.join(line.split())
+        #             f.write(line+'\n')
 
     def __save_audio(self, audio, frames) -> None:
 
@@ -50,10 +70,11 @@ class Recorder:
         wave_form.writeframes(FRAMES)
         wave_form.close()
 
-        # to_text
-        # save_text(file)
+    def save(self, audio, frames) -> None:
+        self.__save_text(audio)
+        self.__save_audio(audio, frames)
 
-    def record(self):
+    def record(self) -> dict:
         audio = pyaudio.PyAudio()
         stream = audio.open(
             frames_per_buffer=self.__FRAMES_PER_BUFFER,
@@ -81,4 +102,4 @@ class Recorder:
         audio.terminate()
 
         # save
-        self.__save_audio(audio, frames)
+        return {'audio': audio, 'frames': frames}
