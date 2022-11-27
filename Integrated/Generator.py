@@ -12,6 +12,7 @@ import os
 import uuid
 import pytz
 from datetime import datetime
+import Feedback
 
 
 class Score:
@@ -47,19 +48,9 @@ class Score:
 
         # score = 100% - (mistake over total count times 100)
         score = 100-(mistake/word_count*100)
+
+        self.__grammar_score = score
         return score
-
-    def __speed(self, res) -> str:
-
-        ideal = {'min': 2.33, 'max': 2.67}
-
-        if res > ideal['max']:
-            return 'fast'
-
-        if res < ideal['min']:
-            return 'slow'
-
-        return 'ideal'
 
     def rate(self, text: list[str], time: float) -> float:
         '''
@@ -78,14 +69,15 @@ class Score:
 
         words: int = self.__word_count(text)
         result = words / time
-        # for testing
-        speed = self.__speed(result)
 
+        self.__rate_raw_result = result
         result /= 2.67
         result *= 100
-        result = result % 100 if result > 100 else result
 
-        return result
+        score = result % 100 if result > 100 else result
+        self.__rate_score = score
+
+        return score
 
     def __identify_hertz(self, gender, min, max) -> int:
         ...
@@ -113,7 +105,10 @@ class Score:
         hertz = self.__identify_hertz(gender, m_hertz[0], m_hertz[1]) if gender[0] == 'm' else self.__identify_hertz(
             gender, f_hertz[0], f_hertz[1])
 
-        return score + hertz
+        score = 0
+        self.__pitch_score = score
+
+        return score
 
     def articulation(self) -> None:
         '''
@@ -126,6 +121,8 @@ class Score:
             - dependent on words & voice
             - Using MAR (Mean Articulatory Rate)
         '''
+        score = 0
+        self.__articulation_score = score
 
     def prounounciation(self) -> None:
         '''
@@ -134,6 +131,8 @@ class Score:
 
         - dependent on words & voice
         '''
+        score = 0
+        self.__prounounciation_score = score
 
     def volume(self) -> None:
         '''
@@ -146,41 +145,104 @@ class Score:
 
         dependent on voice & spectogram
         '''
+        score = 0
+        self.__volume_score = score
 
-
-class Feedback:
-
-    # total need to return for feedback
-    __TOTAL_NEEDED: int = 6
-
-    def __init__(self, grammar_score: float, rate_score: float, pitch_score: float, articulation_score: float, prounounciation_score: float, volume_score: float) -> None:
-        self.scores = {
-            'grammar': grammar_score,
-            'rate': rate_score,
-            'pitch': pitch_score,
-            'articulation': articulation_score,
-            'prounounciation': prounounciation_score,
-            'volume': volume_score,
-        }
+    # feedback
 
     def __get_total_avg_score(self) -> float:
+
+        # scores: dict = {
+        #     'rate': self.__rate_score,
+        #     'pitch': self.__pitch_score,
+        #     'articulation': self.__articulation_score,
+        #     'volume': self.__volume_score,
+        #     'prounounciation': self.__prounounciation_score,
+        #     'grammar': self.__grammar_score,
+        # }
+
+        scores: dict = {
+            'rate': self.__rate_score,
+            'pitch': 0,
+            'articulation': 0,
+            'volume': 0,
+            'prounounciation': 0,
+            'grammar': self.__grammar_score,
+        }
+
         total_score = 0
-        for index in self.scores:
-            total_score += self.scores[index]
-        return total_score / self.__TOTAL_NEEDED
+        for index in scores:
+            total_score += scores[index]
+        return total_score / len(scores)
 
-    def feedback(self) -> None:
-        score = self.scores
-        total_score = self.__get_total_avg_score()
+    def total_average_feedback(self):
 
-        for index in self.scores:
-            print(f'{score[index]}%\tfor {index} -> \tremarks: ', end='')
-            print('good') if score[index] > 85 else print('bad')
+        total_score = int(self.__get_total_avg_score())
 
-        print(f'\noverall score feedback: {total_score} -> remarks: ', end='')
-        print('good') if total_score > 85 else print('bad')
+        if total_score < 60:
+            feedback = 'you did bad'
+        elif total_score > 85:
+            feedback = 'you did good'
+        else:
+            feedback = 'you need more practice'
 
-        # generate the words for feedback
+        print(f'your total avg is: {total_score}, so {feedback}')
+
+    def get_total_average(self):
+        return self.__get_total_avg_score()
+
+    def __speed_comment(self) -> str:
+        ideal = {'min': 2.33, 'max': 2.67}
+
+        if self.__rate_raw_result > ideal['max']:
+            comment: str = 'fast'
+        elif self.__rate_raw_result < ideal['min']:
+            comment: str = 'slow'
+        else:
+            comment: str = 'ideal'
+
+        return comment
+
+    def __rate_feedback(self) -> str:
+        speed = self.__speed_comment()
+        score = self.__rate_score
+        if score < 60:
+            feedback = f"you did bad, since you're speech is {speed}"
+        elif score > 85:
+            feedback = f"you did good, since you're speech is in the {speed} range"
+        else:
+            feedback = f"you need more practice, since you're speech is {speed}"
+        return feedback
+
+    def __rate_pitch(self) -> str:
+        ...
+
+    def __rate_articulation(self) -> str:
+        ...
+
+    def __rate_volume(self) -> str:
+        ...
+
+    def __rate_pronunciation(self) -> str:
+        ...
+
+    def __rate_grammar(self) -> str:
+        ...
+
+    def feedback_for(self, score_for: str, speed: float = 0) -> str:
+        if score_for[0] == 'r':  # r - rate
+            return self.__rate_feedback()
+        if score_for[0] == 'p':  # p - pitch
+            return self.__rate_pitch()
+        if score_for[0] == 'a':  # a - articulation
+            return self.__rate_articulation()
+        if score_for[0] == 'v':  # v - volume
+            return self.__rate_volume()
+        if score_for[0] == 'p':  # p - pronunciation
+            return self.__rate_pronunciation()
+        if score_for[0] == 'g':  # g - grammar
+            return self.__rate_grammar()
+        return 'could not return feedback'
 
 
 class File:
@@ -201,7 +263,7 @@ class File:
     def txt_generated_name(self) -> str:
         return f'{self.__file_name()}.txt'
 
-    def files_from_dataset(self, file_type):
+    def files_from_dataset(self, file_type) -> list:
         path = 'audio/dataset/'
         file_list = []
         for root, dirs, files in os.walk(path):

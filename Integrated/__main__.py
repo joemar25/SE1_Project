@@ -1,9 +1,9 @@
-from Generator import Score, File, Feedback
+from Generator import Score, File
 
 
 def main():
 
-    # instances
+    # object instances
     check = Score()
     generated = File()
 
@@ -16,7 +16,7 @@ def main():
 
     # open text file and read it and save to text
     with open(file_list[0], 'r') as file:
-        text = file.readlines()
+        text: list[str] = file.readlines()
 
     # remove \n
     text = [i.strip() for i in text]
@@ -35,11 +35,19 @@ def main():
 
     # get score(s) [sample]
     grammar_score: float = check.grammar(text, correct)
-    print(f'\ngrammar score: {grammar_score}%', end='')
+    speed_score: float = check.rate(text, 5)
 
-    # get pitch
-    # pitch_score: float = check.pitch('1')  # suppose audio
-    # print(f'\npitch score: {pitch_score}%', end='')
+    # printing values
+    print('\nscores')
+    print(f'rate: {speed_score}%')
+    print(f'grammar: {grammar_score}%')
+
+    # ################################################################### #
+    # result = Feedback(grammar_score, speed_score, 80, 80, 80, 80)
+
+    # on rate, it is mandated to have the time of the audio file
+    print('rate feedback: '+check.feedback_for('rate'))
+    print('total average:', check.get_total_average())
 
 
 if __name__ == "__main__":
