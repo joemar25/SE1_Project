@@ -39,14 +39,12 @@ def main():
 
     # printing values
     print('\nscores')
-    print(f'rate: {speed_score}%')
-    print(f'grammar: {grammar_score}%')
+    print(f'rate: {speed_score}')
+    print(f'grammar: {grammar_score}')
 
     # ################################################################### #
-    # result = Feedback(grammar_score, speed_score, 80, 80, 80, 80)
-
     # on rate, it is mandated to have the time of the audio file
-    print('rate feedback: '+check.feedback_for('rate'))
+    print('rate feedback:', check.feedback_for('rate'), '\n')
     print('total average:', check.get_total_average())
 
 

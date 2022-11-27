@@ -2,17 +2,16 @@
     this generator file contains all the generator classes for returning [Score(s), File Name, ...]
     
     - Scores contain : rate (speed), pitch, articulation, prounounciation, volume
+        which includes Feedback
     
     - File Name : contains the generated filename. Used for saving a file.
     
-    - Feedback
 '''
 
 import os
 import uuid
 import pytz
 from datetime import datetime
-import Feedback
 
 
 class Score:
