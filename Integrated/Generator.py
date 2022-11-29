@@ -5,7 +5,7 @@
         which includes Feedback
     
     - File Name : contains the generated filename. Used for saving a file.
-    
+
 '''
 
 import os
@@ -82,7 +82,10 @@ class Score:
         ...
 
     def __identify_gender(self, voice) -> str:
-        # testing ..... voice must be identified before deciding the gender
+        # testing ... voice must be identified before deciding the gender
+
+        # ina speech segmenter -> pip install inaSpeechSegmenter
+        # mfcc - mel function coeficient -> pip install inaSpeechSegmenter
         gender = 'male' if voice == '' else 'female'
         return gender
 
@@ -263,10 +266,13 @@ class File:
         return f'{self.__file_name()}.txt'
 
     def files_from_dataset(self, file_type) -> list:
-        path = 'audio/dataset/'
+
+        # add error handling
         file_list = []
+        path = 'audio/dataset/'
         for root, dirs, files in os.walk(path):
             for file in files:
                 if file[-3:] == file_type:
                     file_list.append(os.path.join(root, file))
         return file_list
+

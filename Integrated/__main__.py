@@ -9,6 +9,10 @@ def main():
 
     # ################################################################### #
 
+    # record
+
+    # ################################################################### #
+
     # suppose, it is already in (clean state)
     # suppose, a raw data example
     # file list will contain the files from dataset folder
