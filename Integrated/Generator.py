@@ -60,8 +60,6 @@ class Score:
 
             Note: Lower is Slower
                 Higher is Faster
-
-            Note: A voice record must be at at least 1 min duration to calculate this
         '''
         if time <= 0 or text[0] == '':
             return 0
@@ -195,13 +193,11 @@ class Score:
 
     def __speed_comment(self) -> str:
         ideal = {'min': 2.33, 'max': 2.67}
-
         if self.__rate_raw_result > ideal['max']:
-            comment: str = 'fast'
-        elif self.__rate_raw_result < ideal['min']:
-            comment: str = 'slow'
-        else:
-            comment: str = 'ideal'
+            return 'fast'
+        if self.__rate_raw_result < ideal['min']:
+            return 'slow'
+        return 'ideal'
 
         return comment
 
@@ -216,34 +212,38 @@ class Score:
             feedback = f"you need more practice, since you're speech is {speed}"
         return feedback
 
-    def __rate_pitch(self) -> str:
+    def __pitch_feedback(self, input_hz: float, min, max) -> str:
+        if input_hz < min:
+            return 'to low'
+        if input_hz > max:
+            return 'to to high'
+        return 'keep it up'
+
+    def __articulation_feedback(self) -> str:
         ...
 
-    def __rate_articulation(self) -> str:
+    def __volume_feedback(self) -> str:
         ...
 
-    def __rate_volume(self) -> str:
+    def __pronunciation_feedback(self) -> str:
         ...
 
-    def __rate_pronunciation(self) -> str:
-        ...
-
-    def __rate_grammar(self) -> str:
+    def __grammar_feedback(self) -> str:
         ...
 
     def feedback_for(self, score_for: str, speed: float = 0) -> str:
         if score_for[0] == 'r':  # r - rate
             return self.__rate_feedback()
         if score_for[0] == 'p':  # p - pitch
-            return self.__rate_pitch()
+            return self.__pitch_feedback(2, 1, 2)
         if score_for[0] == 'a':  # a - articulation
-            return self.__rate_articulation()
+            return self.__articulation_feedback()
         if score_for[0] == 'v':  # v - volume
-            return self.__rate_volume()
+            return self.__volume_feedback()
         if score_for[0] == 'p':  # p - pronunciation
-            return self.__rate_pronunciation()
+            return self.__pronunciation_feedback()
         if score_for[0] == 'g':  # g - grammar
-            return self.__rate_grammar()
+            return self.__grammar_feedback()
         return 'could not return feedback'
 
 
@@ -275,4 +275,3 @@ class File:
                 if file[-3:] == file_type:
                     file_list.append(os.path.join(root, file))
         return file_list
-
