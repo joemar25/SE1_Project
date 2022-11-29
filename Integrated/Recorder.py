@@ -128,15 +128,3 @@ class Recorder:
 
         # save
         return {'audio': audio, 'frames': frames}
-
-
-# test
-recorder = Recorder()
-
-# record audio
-print("start recording...")
-record_file = recorder.record()
-print("record stop...")
-
-# record[0] -> contains the audio & record[1] -> constains the frames
-recorder.save(record_file['audio'], record_file['frames'])
