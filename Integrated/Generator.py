@@ -12,6 +12,9 @@ import os
 import uuid
 import pytz
 from datetime import datetime
+from inaSpeechSegmenter import Segmenter
+
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
 
 class Score:
@@ -79,25 +82,40 @@ class Score:
     def __identify_hertz(self, gender, min, max) -> int:
         ...
 
-    def __identify_gender(self, voice) -> str:
-        # testing ... voice must be identified before deciding the gender
-
+    def __identify_gender(self, input_file) -> str:
         # ina speech segmenter -> pip install inaSpeechSegmenter
-        # mfcc - mel function coeficient -> pip install inaSpeechSegmenter
-        gender = 'male' if voice == '' else 'female'
-        return gender
 
+        seg = Segmenter(vad_engine='sm')
+
+        # by default gender dection is true, else set it to detect_gender=False
+        segmentation = seg(input_file)
+        gender = ['male', 'female']
+        _gender = ''
+
+        for s in segmentation:
+            if gender[0] == s[0]:
+                _gender = s[0]
+                break
+            if gender[1] == s[0]:
+                _gender = s[0]
+                break
+
+        return _gender
+    
+    def test_identify_gender(self, audio) : 
+        return self.__identify_gender(audio)
+    
     def pitch(self, audio) -> float:
         '''
         Pitch: Male [85-180 hertz] & Female [165-255 hertz]
         Note: this can be seen in Spectrogram's 'Y-Axis'
         '''
 
-        # test, suppose audio is none this time
+        # # test, suppose audio is none this time
         m_hertz: list = [85, 180]  # m_hertz[0], m_hertz[1]
         f_hertz: list = [165, 255]  # f_hertz[0], f_hertz[1]
 
-        # identify the gender voice
+        # # identify the gender voice
         gender = self.__identify_gender(audio)
 
         score = 0
@@ -105,7 +123,6 @@ class Score:
         hertz = self.__identify_hertz(gender, m_hertz[0], m_hertz[1]) if gender[0] == 'm' else self.__identify_hertz(
             gender, f_hertz[0], f_hertz[1])
 
-        score = 0
         self.__pitch_score = score
 
         return score
@@ -177,7 +194,7 @@ class Score:
 
     def total_average_feedback(self):
 
-        total_score = int(self.__get_total_avg_score())
+        total_score: int = int(self.__get_total_avg_score())
 
         if total_score < 60:
             feedback = 'you did bad'
@@ -186,7 +203,7 @@ class Score:
         else:
             feedback = 'you need more practice'
 
-        print(f'your total avg is: {total_score}, so {feedback}')
+        print(f'your total avg is: {total_score}%, so {feedback}')
 
     def get_total_average(self):
         return self.__get_total_avg_score()

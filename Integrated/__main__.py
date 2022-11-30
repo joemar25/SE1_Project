@@ -1,4 +1,10 @@
-from Generator import Score, File
+
+try:
+    import os
+    from Generator import Score, File
+except Exception:
+    print('import error occur')
+    raise
 
 
 def main():
@@ -41,6 +47,13 @@ def main():
     grammar_score: float = check.grammar(text, correct)
     speed_score: float = check.rate(text, 5)
 
+    # gender identified test
+    wav_file = file_list[0][:-3] + 'wav'
+    gender = check.test_identify_gender(wav_file)
+
+    # clear scr
+    os.system('cls')
+
     # printing values
     print('\nscores')
     print(f'rate: {speed_score}')
@@ -50,6 +63,8 @@ def main():
     # on rate, it is mandated to have the time of the audio file
     print('rate feedback:', check.feedback_for('rate'), '\n')
     print('total average:', check.get_total_average())
+    print('gender of the speaker is:', gender)
+    check.total_average_feedback()
 
 
 if __name__ == "__main__":
