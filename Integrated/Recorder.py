@@ -74,7 +74,7 @@ class Recorder:
 
             model = whisper.load_model('tiny')
             result = model.transcribe(
-                file, # ERROR 
+                file,
                 fp16=False,
                 language='English',
                 task='Translate'
@@ -83,7 +83,7 @@ class Recorder:
             text = str(result["text"])
             text = str(text).split('.')
 
-            file = audio[:-4]+'.txt'
+            file = file[:-4]+'.txt'
 
             # save
             with open(file, 'w') as f:
