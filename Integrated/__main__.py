@@ -8,7 +8,6 @@ except Exception:
 
 
 def main():
-
     # object instances
     check = Score()
     generated = File()
@@ -24,6 +23,7 @@ def main():
     # file list will contain the files from dataset folder
     file_list = generated.files_from_dataset('txt')
 
+    print(file_list)
     # open text file and read it and save to text
     with open(file_list[0], 'r') as file:
         text: list[str] = file.readlines()
