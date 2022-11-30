@@ -48,6 +48,9 @@ def _emptydir(directory: str):
 
 class Recorder:
 
+    def get_txt_file_name(self) -> str:
+        return self.file_name
+
     def save(self, audio, frames) -> None:
         ####################### AUDIO SAVE #######################
 
@@ -59,6 +62,7 @@ class Recorder:
             # # config
             wav_file = File().wav_generated_name()
             file = PATH + wav_file
+
             SAMPWIDTH = audio.get_sample_size(_FORMAT)
             FRAMES = b''.join(frames)
 
@@ -84,6 +88,7 @@ class Recorder:
             text = str(text).split('.')
 
             file = file[:-4]+'.txt'
+            self.file_name = file
 
             # save
             with open(file, 'w') as f:

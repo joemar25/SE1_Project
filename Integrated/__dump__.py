@@ -26,22 +26,27 @@ def main():
 
     # ################################################################### #
 
-    # get audio file, text generated file
-    _tempf = file = recorder.get_txt_file_name()
+    # suppose, it is already in (clean state)
+    # suppose, a raw data example
+    # file list will contain the files from dataset folder
+    file_list = generated.files_from_dataset('txt')
 
     # open text file and read it and save to text
-    with open(file, 'r') as file:
+    with open(file_list[0], 'r') as file:
         text: list[str] = file.readlines()
 
-    # # remove \n
+    # remove \n
     text = [i.strip() for i in text]
 
-    # # do grammar check, below is just an example
+    # do grammar check, below is just an example
     correct: list[str] = [
         'my name is Joemar',
         'and i live in my house',  # suppose 'live' and 'house'
         'i do a lot of chores',
     ]
+
+    # get file names [sample]
+    print(f'txt file name used: {file_list[0]}')
 
     # ################################################################### #
 
@@ -50,8 +55,8 @@ def main():
     speed_score: float = check.rate(text, 5)
 
     # gender identified test
-    wav_file = str(_tempf)[:-3] + 'wav'
-    gender: str = check.test_identify_gender(wav_file)
+    wav_file = file_list[0][:-3] + 'wav'
+    gender = check.test_identify_gender(wav_file)
 
     # clear scr
     os.system('cls')
