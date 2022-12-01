@@ -17,16 +17,16 @@ def main():
     # ################################################################### #
 
     print("start rec...")
-    # record_file = recorder.record()
+    record_file = recorder.record()
     print("rec stop...")
 
-    # record[0] -> contains the audio & record[1] -> constains the frames
-    # recorder.save(record_file['audio'], record_file['frames'])
+    # save recording
+    recorder.save(record_file['audio'], record_file['frames'])
 
     # ################################################################### #
 
     # get audio file, text generated file
-    _tempf = txt_file = 'audio/dataset/2211306d9b7338-705f-11ed-80dc-708bcd015b0c3318.txt'
+    _tempf = txt_file = recorder.get_txt_file_name()
 
     # ################################################################### #
 
