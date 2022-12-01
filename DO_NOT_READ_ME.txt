@@ -5,7 +5,7 @@ TODO
 
     [/] from that audio files, the filenames would be save as list of dataset
 
-    [ ] update 2
+    [ ] update, files glob (not necessarily)
 
     [/] Gender Identification: Used for identify voice pitch
     <https://www.youtube.com/watch?v=ATCYEwSCGsE&ab_channel=DeepCode>
@@ -15,7 +15,18 @@ TODO
     [] (Mar) Articulation : to look further
     https://www.youtube.com/watch?v=xDTgziqNwSQ&ab_channel=SatyajitPattnaik
 
+    [/] from Gingirit.gingirit from gingirit
 
+    note: the only limit is that, it cannot correct a word more than 600 characters at once.
+
+    [] librosa, pitch detection
+
+    [] comparison of the generated speech to text,
+       the user will type the sentence of his/her speech
+       (input first to read, and state that while recording)
+       (articulation)
+    
+    [] 
 
 
 we use DRY aka Don't Repeat Yourself Principle in Programming

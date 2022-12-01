@@ -13,6 +13,7 @@ import uuid
 import pytz
 from datetime import datetime
 from inaSpeechSegmenter import Segmenter
+from gingerit.gingerit import GingerIt
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
@@ -20,7 +21,6 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 class Score:
 
     def __word_count(self, text: list[str]) -> int:
-
         word_count: int = 0
 
         for words in text:
@@ -29,24 +29,29 @@ class Score:
 
         return word_count
 
-    def grammar(self, input_text: list[str], correct_text: list[str]) -> float:
-        # open for algorithms on checking a specific sentence is grammatically correct.
-
-        # get total number of words generated saved from text
-        word_count: int = self.__word_count(input_text)
+    def grammar(self, input_text_dir: str) -> float:
+        # gingerit will help us to catch gramatical errors and has the ability to correct it
+        parser = GingerIt()
 
         # variables
         mistake: int = 0
         score: float = 0
 
-        for sentence_a, sentence_b in zip(input_text, correct_text):
+        # open text file and read it and save to text
+        with open(input_text_dir, 'r') as file:
+            text: list[str] = file.readlines()
 
-            # split the sentences, so we can get no 'spaces'
-            sentence_a = sentence_a.split(' ')
-            sentence_b = sentence_b.split(' ')
+        # remove \n
+        text = [i.strip() for i in text]
 
-            # estimate the mistakes
-            mistake += len(set(sentence_a).difference(sentence_b))
+        # get total number of words generated saved from text
+        word_count: int = self.__word_count(text)
+
+        # mistake counter
+        for sentence in text:
+            res = parser.parse(sentence)
+            mistake += len(res['corrections'])
+            # print(res['corrections'])
 
         # score = 100% - (mistake over total count times 100)
         score = 100-(mistake/word_count*100)
@@ -54,7 +59,7 @@ class Score:
         self.__grammar_score = score
         return score
 
-    def rate(self, text: list[str], time: float) -> float:
+    def rate(self, input_text_dir: str, time: float) -> float:
         '''
         Rate 
             Words / Time 
@@ -64,6 +69,9 @@ class Score:
             Note: Lower is Slower
                 Higher is Faster
         '''
+        with open(input_text_dir, 'r') as file:
+            text: list[str] = file.readlines()
+
         if time <= 0 or text[0] == '':
             return 0
 
