@@ -23,11 +23,12 @@ segmentation = seg(input_file)
 gender = ['male', 'female']
 
 # print(segmentation[0][0])
+# for s in segmentation:
+#     if gender[0] == s[0]:
+#         print(s[0])
+#         break
+#     if gender[1] == s[0]:
+#         print(s[0])
+#         break
 
-for s in segmentation:
-    if gender[0] == s[0]:
-        print(s[0])
-        break
-    if gender[1] == s[0]:
-        print(s[0])
-        break
+# print(segmentation)

@@ -287,7 +287,7 @@ class File:
         # add error handling
         file_list = []
         #get the directory above current directory then go to \audio\dataset
-        path = os.path.abspath(os.path.join(os.getcwd(), os.pardir)) + '\\audio\dataset'
+        path = os.path.abspath(os.path.join(os.getcwd(), os.pardir)) + '\\audio\\dataset'
         print("Current path:",path)
         for root, dirs, files in os.walk(path):
             for file in files:

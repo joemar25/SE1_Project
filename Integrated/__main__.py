@@ -28,7 +28,7 @@ def main():
     # get audio file, text generated file
     _tempf = file = recorder.get_txt_file_name()
 
-    print(file_list)
+    print(file)
     # open text file and read it and save to text
     with open(file, 'r') as file:
         text: list[str] = file.readlines()
