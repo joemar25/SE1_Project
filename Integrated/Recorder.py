@@ -28,14 +28,13 @@ _CHANNELS: int = 2
 _RATE: int = 48000
 _FORMAT = pa.paInt16
 
-''''
-    used for chcking if directory exist or not
-        - if not exist, then create one
-        - else do nothing
-'''
-
 
 def _emptydir(directory: str):
+    ''''
+        used for chcking if directory exist or not
+        - if not exist, then create one
+        - else do nothing
+    '''
     if not (directory and not directory.isspace()):
         return
 
@@ -49,19 +48,47 @@ def _emptydir(directory: str):
 class Recorder:
 
     def get_txt_file_name(self) -> str:
-        return self.file_name
+        '''
+            get txt file generated name
+        '''
+        return self.file_name + '.txt'
+
+    def get_wav_file_name(self) -> str:
+        '''
+            get wav file generated name
+        '''
+        return self.file_name + '.wav'
+
+    def get_audio_duration(self, audio_path):
+        # read audio and get framerate and number of frames
+        audio = wave.open(audio_path, 'rb')
+        frate = audio.getframerate()
+        nframe = audio.getnframes()
+        # get time of the audio in seconds
+        t_audio_in_sec = nframe / frate
+        # val = wave_form.getnframes()
+        audio.close()
+        return t_audio_in_sec
 
     def save(self, audio, frames) -> None:
-        ####################### AUDIO SAVE #######################
-
+        '''
+            save audio file by getting the audio and the frames
+            - audio save
+            - text save
+        '''
         try:
             # saving path
             PATH: str = 'audio/dataset/'
             _emptydir(PATH)
 
-            # # config
-            wav_file = File().wav_generated_name()
-            file = PATH + wav_file
+            # config, get generated file name with no extention
+            file = File().generated_name()
+
+            # put it in a self variable to be accessed by other functions
+            self.file_name = PATH + file
+
+            # file now is a wav file
+            file = PATH + file + '.wav'
 
             SAMPWIDTH = audio.get_sample_size(_FORMAT)
             FRAMES = b''.join(frames)
@@ -87,8 +114,8 @@ class Recorder:
             text = str(result["text"])
             text = str(text).split('.')
 
-            file = file[:-4]+'.txt'
-            self.file_name = file
+            # get the txt (transcribed text) from that audio
+            file = self.get_txt_file_name()
 
             # save
             with open(file, 'w') as f:

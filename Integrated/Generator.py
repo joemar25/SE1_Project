@@ -61,13 +61,14 @@ class Score:
 
     def rate(self, input_text_dir: str, time: float) -> float:
         '''
-        Rate 
-            Words / Time 
-            140  to 160 wpm [ideal]
-            2.33 to 2.67 score 
+            Formula:
+            - Words / Time 
+            - 140  to 160 wpm [ideal]
+            - 2.33 to 2.67 score 
 
-            Note: Lower is Slower
-                Higher is Faster
+            - Note:
+                - Lower is Slower
+                - Higher is Faster
         '''
         with open(input_text_dir, 'r') as file:
             text: list[str] = file.readlines()
@@ -91,8 +92,7 @@ class Score:
         ...
 
     def __identify_gender(self, input_file) -> str:
-        # ina speech segmenter -> pip install inaSpeechSegmenter
-
+        # speech segmenter is for audio analysis
         seg = Segmenter(vad_engine='sm')
 
         # by default gender dection is true, else set it to detect_gender=False
@@ -284,11 +284,8 @@ class File:
 
         return f"{udate}{utime}"
 
-    def wav_generated_name(self) -> str:
-        return f'{self.__file_name()}.wav'
-
-    def txt_generated_name(self) -> str:
-        return f'{self.__file_name()}.txt'
+    def generated_name(self) -> str:
+        return f'{self.__file_name()}'
 
     def files_from_dataset(self, file_type) -> list:
 
