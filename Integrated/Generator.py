@@ -101,10 +101,10 @@ class Score:
                 break
 
         return _gender
-    
-    def test_identify_gender(self, audio) : 
+
+    def test_identify_gender(self, audio):
         return self.__identify_gender(audio)
-    
+
     def pitch(self, audio) -> float:
         '''
         Pitch: Male [85-180 hertz] & Female [165-255 hertz]
