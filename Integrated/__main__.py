@@ -1,17 +1,21 @@
+__authors__ = "joemar_olan_glenn_arrlee_jericho"
+__version__ = "1.5"
+__docformat__ = "restructuredtext en"
 
 try:
+
     import os
-    from Generator import Score, File
+    from Generator import Score
     from Recorder import Recorder
-except Exception:
-    print('import error occur')
+
+except ImportError as e:
+    print(e)
     raise
 
 
 def main():
     # object instances
     check = Score()
-    generated = File()
     recorder = Recorder()
 
     # ################################################################### #

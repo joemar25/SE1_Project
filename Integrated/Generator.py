@@ -1,22 +1,30 @@
 ''''
-    this generator file contains all the generator classes for returning [Score(s), File Name, ...]
-    
-    - Scores contain : rate (speed), pitch, articulation, prounounciation, volume
-        which includes Feedback
-    
-    - File Name : contains the generated filename. Used for saving a file.
+    this generator file contains all the generator classes for returning [Score(s), File, ...]
 
+    - Scores: contains rate (speed), pitch, articulation, prounounciation, volume
+        which includes Feedback, depending on the generated scores
+
+    - File : contains the generated filename. Used for saving a file.
 '''
 
-import os
-import uuid
-import pytz
-from datetime import datetime
-from inaSpeechSegmenter import Segmenter
-from gingerit.gingerit import GingerIt
+__authors__ = "joemar_olan_glenn_arrlee_jericho"
+__version__ = "1.5"
+__docformat__ = "restructuredtext en"
+
+try:
+
+    import os
+    import uuid
+    import pytz
+    from datetime import datetime
+    from inaSpeechSegmenter import Segmenter
+    from gingerit.gingerit import GingerIt
+
+except ImportError as e:
+    print(e)
+    raise
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
-
 
 class Score:
 

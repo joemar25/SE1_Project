@@ -1,12 +1,10 @@
-__author__ = "Joemar25"
+__authors__ = "joemar_olan_glenn_arrlee_jericho"
 __version__ = "1.5"
 __docformat__ = "restructuredtext en"
 
-
-import os
-
 try:
 
+    import os
     import whisper
     import wave
     import _portaudio as pa
@@ -143,7 +141,7 @@ class Recorder:
         )
 
         frames: list = []
-        record_time = _MIN * _SEC
+        record_time: int = _MIN * _SEC
 
         try:
 
