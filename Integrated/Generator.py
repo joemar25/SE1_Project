@@ -1,7 +1,7 @@
 ''''
     this generator file contains all the generator classes for returning [Score(s), File, ...]
 
-    - Scores: contains rate (speed), pitch, articulation, prounounciation, volume
+    - Score: contains rate (speed), pitch, articulation, prounounciation, volume
         which includes Feedback, depending on the generated scores
 
     - File : contains the generated filename. Used for saving a file.
