@@ -26,7 +26,7 @@ TODO
        (input first to read, and state that while recording)
        (articulation)
     
-    [] 
+    [] Deadline on December 14 2022 or before for finalization of the presentation
 
 
 we use DRY aka Don't Repeat Yourself Principle in Programming
