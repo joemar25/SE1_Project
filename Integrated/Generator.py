@@ -26,6 +26,7 @@ except ImportError as e:
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
+
 class Score:
 
     def __word_count(self, text: list[str]) -> int:

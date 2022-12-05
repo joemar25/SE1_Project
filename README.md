@@ -11,9 +11,9 @@ Folders
 
 ---
 
-## Open Souce used
+## Library used
 
-- [WHISPER](<https://github.com/openai/whisper>)
+- [Whisper](<https://github.com/openai/whisper>)
 
   - used for speech recognition with speech to text feature
   - a lot of dataset for transcribing different languages
@@ -33,3 +33,25 @@ Folders
     # and
     pip install setuptools-rust
     ```
+
+- [Librosa](https://github.com/librosa/librosa)
+  
+  - A python package for music and audio analysis
+  - dependency: `soundfile` and `audioread`
+  
+  ```py
+    # install librosa
+    python -m pip install librosa
+    # or 
+    conda install -c conda-forge librosa
+  ```
+
+- [InaSpeechSegmenter](https://github.com/ina-foss/inaSpeechSegmenter)
+  
+  - A python package for music and audio analysis
+  - dependency: `soundfile` and `audioread`
+  
+  ```py
+    # install inaSpeechSegmenter
+    pip install inaSpeechSegmenter
+  ```
