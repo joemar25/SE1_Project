@@ -55,3 +55,12 @@ Folders
     # install inaSpeechSegmenter
     pip install inaSpeechSegmenter
   ```
+
+- [tmp](tmp)
+  
+  - note
+  - dependency: `note`
+  
+  ```py
+  # install
+  ```
