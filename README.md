@@ -55,5 +55,3 @@ Folders
     # install inaSpeechSegmenter
     pip install inaSpeechSegmenter
   ```
-
-pull
