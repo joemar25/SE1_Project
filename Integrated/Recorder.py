@@ -3,20 +3,17 @@ __version__ = "1.5"
 __docformat__ = "restructuredtext en"
 
 try:
-
     import os
     import whisper
     import wave
     import _portaudio as pa
-
     from pyaudio import PyAudio as py_audio
     from Generator import File
-
 except ImportError as e:
     print(e)
     raise
 
-# recording limit
+# limit
 _SEC: int = 60
 _MIN: int = 5
 
@@ -62,9 +59,9 @@ class Recorder:
         audio = wave.open(audio_path, 'rb')
         frate = audio.getframerate()
         nframe = audio.getnframes()
+
         # get time of the audio in seconds
         t_audio_in_sec = nframe / frate
-        # val = wave_form.getnframes()
         audio.close()
         return t_audio_in_sec
 
@@ -101,7 +98,7 @@ class Recorder:
 
         ######################## TXT SAVE ########################
 
-            model = whisper.load_model('tiny')
+            model = whisper.load_model('base')
             result = model.transcribe(
                 file,
                 fp16=False,
@@ -129,6 +126,9 @@ class Recorder:
             print(e)
 
     def record(self) -> dict:
+        '''
+            recording of audio from recording peripheral like microphone and etc.
+        '''
 
         audio = py_audio()
 
@@ -144,11 +144,9 @@ class Recorder:
         record_time: int = _MIN * _SEC
 
         try:
-
             for _ in range(0, int(_RATE / _FRAMES_PER_BUFFER * record_time)):
                 data = stream.read(_FRAMES_PER_BUFFER)
                 frames.append(data)
-
         except KeyboardInterrupt:
             ...
 

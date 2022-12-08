@@ -24,6 +24,7 @@ except ImportError as e:
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
+
 class Score:
 
     # private variables for scores (used for total)
@@ -33,6 +34,8 @@ class Score:
     __articulation_score: float = 0
     __volume_score: float = 0
     __prounounciation_score: float = 0
+
+    # @todo: remove all score inside all funcition and make it global
 
     def __word_count(self, text: list[str]) -> int:
         '''
@@ -132,7 +135,11 @@ class Score:
 
     def pitch(self, audio) -> float:
         '''
-        Pitch: Male [85-180 hertz] & Female [165-255 hertz]
+        identify pitch by hertz\n
+        \n
+        - for male   : [85  - 180]hz\n
+        - for female : [165 - 255]hz\n
+        \n
         Note: this can be seen in Spectrogram's 'Y-Axis'
         '''
 
@@ -143,7 +150,7 @@ class Score:
         # # identify the gender voice
         gender = self.__identify_gender(audio)
 
-        score = 0
+        score: int = 0
 
         hertz = self.__identify_hertz(gender, m_hertz[0], m_hertz[1]) if gender[0] == 'm' else self.__identify_hertz(
             gender, f_hertz[0], f_hertz[1])
@@ -238,11 +245,11 @@ class Score:
         speed = self.__speed_comment()
         score = self.__rate_score
         if score < 60:
-            feedback = f"you did bad, since you're speech is {speed}"
+            feedback = f"speech is {speed}"
         elif score > 85:
-            feedback = f"you did good, since you're speech is in the {speed} range"
+            feedback = f"speech is in the {speed} range"
         else:
-            feedback = f"you need more practice, since you're speech is {speed}"
+            feedback = f"speech is {speed}"
         return feedback
 
     def __pitch_feedback(self, input_hz: float, min, max) -> str:
