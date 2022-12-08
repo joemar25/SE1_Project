@@ -12,34 +12,44 @@ __version__ = "1.5"
 __docformat__ = "restructuredtext en"
 
 try:
-
     import os
     import uuid
     import pytz
     from datetime import datetime
     from inaSpeechSegmenter import Segmenter
     from gingerit.gingerit import GingerIt
-
 except ImportError as e:
     print(e)
     raise
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
-
 class Score:
 
-    def __word_count(self, text: list[str]) -> int:
-        word_count: int = 0
+    # private variables for scores (used for total)
+    __grammar_score: float = 0
+    __rate_score: float = 0
+    __pitch_score: float = 0
+    __articulation_score: float = 0
+    __volume_score: float = 0
+    __prounounciation_score: float = 0
 
+    def __word_count(self, text: list[str]) -> int:
+        '''
+            returns word count of a specific list of text
+        '''
+        word_count: int = 0
         for words in text:
             words = words.split(' ')
             word_count += len(words)
-
         return word_count
 
     def grammar(self, input_text_dir: str) -> float:
-        # gingerit will help us to catch gramatical errors and has the ability to correct it
+        '''
+            using gingerit module\n
+            - will help us to catch gramatical errors and has the ability to correct it
+        '''
+        # gingerit object
         parser = GingerIt()
 
         # variables
@@ -50,22 +60,22 @@ class Score:
         with open(input_text_dir, 'r') as file:
             text: list[str] = file.readlines()
 
-        # remove \n
+        # cleaning by removing '\n'
         text = [i.strip() for i in text]
 
         # get total number of words generated saved from text
         word_count: int = self.__word_count(text)
 
-        # mistake counter
-        for sentence in text:
-            res = parser.parse(sentence)
-            mistake += len(res['corrections'])
-            # print(res['corrections'])
+        if word_count != 0:
+            # mistake counter
+            for sentence in text:
+                res = parser.parse(sentence)
+                mistake += len(res['corrections'])
 
-        # score = 100% - (mistake over total count times 100)
-        score = 100-(mistake/word_count*100)
+            # formula: (score = 100% - (mistake over total count times 100))
+            score = 100-(mistake/word_count*100)
 
-        self.__grammar_score = score
+            self.__grammar_score = score
         return score
 
     def rate(self, input_text_dir: str, time: float) -> float:
@@ -75,9 +85,7 @@ class Score:
             - 140  to 160 wpm [ideal]
             - 2.33 to 2.67 score 
 
-            - Note:
-                - Lower is Slower
-                - Higher is Faster
+            - Note: Lower is Slower and Higher is Faster
         '''
         with open(input_text_dir, 'r') as file:
             text: list[str] = file.readlines()
@@ -186,21 +194,12 @@ class Score:
 
     def __get_total_avg_score(self) -> float:
 
-        # scores: dict = {
-        #     'rate': self.__rate_score,
-        #     'pitch': self.__pitch_score,
-        #     'articulation': self.__articulation_score,
-        #     'volume': self.__volume_score,
-        #     'prounounciation': self.__prounounciation_score,
-        #     'grammar': self.__grammar_score,
-        # }
-
         scores: dict = {
             'rate': self.__rate_score,
-            'pitch': 0,
-            'articulation': 0,
-            'volume': 0,
-            'prounounciation': 0,
+            'pitch': self.__pitch_score,
+            'articulation': self.__articulation_score,
+            'volume': self.__volume_score,
+            'prounounciation': self.__prounounciation_score,
             'grammar': self.__grammar_score,
         }
 

@@ -64,3 +64,21 @@ Folders
   ```py
   # install
   ```
+
+## Use
+
+- Toronto Emotional Speech Set
+
+## Fixes
+
+- for github message error, declined due to email privacy restrictions
+  
+  ```txt
+    <https://stackoverflow.com/questions/43378060/meaning-of-the-github-message-push-declined-due-to-email-privacy-restrictions>
+  ```
+
+## Other
+
+- pysndfile
+- seaborn
+- ipython
