@@ -14,7 +14,7 @@ def str_fix(a_string):
 
 def display_matrix(array) -> None:
     '''
-        ### Displaying Array of Processes
+        # Displaying Array of Processes
         - requires 1 parameter which is the array
         - get that array
         - and display the array
@@ -28,10 +28,11 @@ def display_matrix(array) -> None:
         max_need = data[2]
         available_matrix = data[3]
         need_matrix = data[4]
+        status = data[5]
 
         # printing
         print(' ', id, '   ', str_fix(allocated_matrix), '   ', str_fix(max_need),
-              '   ', str_fix(available_matrix), '   ', str_fix(need_matrix), '   ')
+              '   ', str_fix(available_matrix), '   ', str_fix(need_matrix), '   ', status)
 
 
 def get_total_allocation(array) -> object:
@@ -78,12 +79,17 @@ def main():
     # all processes need to handle
     processes = np.array(
         [
-            # ['id', [allocation matrix], [max need matrix], [available matrix], [need matrix]]
-            ['P1', [0, 1, 1, 0], [0, 2, 1, 0], [0, 22, 0, 0], [0, 0, 0, 0]],
-            ['P2', [1, 2, 3, 1], [1, 6, 5, 2], [0, 0, 0, 0], [0, 0, 0, 0]],
-            ['P3', [1, 3, 6, 5], [2, 3, 6, 6], [0, 0, 0, 0], [0, 0, 0, 0]],
-            ['P4', [0, 6, 3, 2], [0, 6, 5, 2], [0, 0, 0, 0], [0, 0, 66, 0]],
-            ['P5', [0, 0, 1, 4], [0, 6, 5, 6], [0, 0, 0, 0], [0, 0, 0, 0]],
+            # ['id', [allocation matrix], [max need matrix], [available matrix], [need matrix]], 'status'
+            ['P1', [0, 1, 1, 0], [0, 2, 1, 0], [
+                0, 0, 0, 0], [0, 0, 0, 0], 'unchecked'],
+            ['P2', [1, 2, 3, 1], [1, 6, 5, 2], [
+                0, 0, 0, 0], [0, 0, 0, 0], 'unchecked'],
+            ['P3', [1, 3, 6, 5], [2, 3, 6, 6], [
+                0, 0, 0, 0], [0, 0, 0, 0], 'unchecked'],
+            ['P4', [0, 6, 3, 2], [0, 6, 5, 2], [
+                0, 0, 0, 0], [0, 0, 0, 0], 'unchecked'],
+            ['P5', [0, 0, 1, 4], [0, 6, 5, 6], [
+                0, 0, 0, 0], [0, 0, 0, 0], 'unchecked'],
         ],
         dtype=object,
         copy=False,
@@ -103,6 +109,7 @@ def main():
     )
 
     # max - alloc = need
+    sample_blank = np.zeros((4,), dtype=int)
     for data in processes:
 
         # get allocation matrix
@@ -112,6 +119,8 @@ def main():
 
         # set need matrix
         data[4] = np.subtract(max_need, allocated_matrix)
+        sample_blank = np.zeros((4,), dtype=int)
+        data[3] = sample_blank
 
     # initialized available matrix from total available matrix minus total allocation
     init_available_matrix = np.subtract(total_matrix, total_allocation)
@@ -120,7 +129,55 @@ def main():
     # disp
     display_matrix(processes)
 
-    # TODO  bankers algo
+    # available matrix row counter
+    r = 0
+    for data in processes:
+        # available matrix
+        am = processes[r][3]
+
+        # check if available matrix can cover up the need matrix
+        if (am >= data[4]).all() and data[5] == 'unchecked':
+            max_matrix = data[2]
+            available_matrix = np.subtract(processes[r][3], data[4])
+            data[4] = np.zeros((4,), dtype=int)
+            data[5] = 'checked'
+
+            r += 1
+            if r >= 5:
+                r = 0
+                break
+
+            processes[r][3] = np.add(available_matrix, max_matrix)
+
+    for data in processes:
+        # if (data[4] != sample_blank).any():
+        if data[5] == 'unchecked':
+            needBacktrack = True
+            break
+        else:
+            needBacktrack = False
+
+    for data in processes:
+        # available matrix
+        am = processes[r][3]
+
+        # check if available matrix can cover up the need matrix
+        if (am >= data[4]).all() and data[5] == 'unchecked':
+            max_matrix = data[2]
+            available_matrix = np.subtract(processes[r][3], data[4])
+            data[4] = np.zeros((4,), dtype=int)
+            data[5] = 'checked'
+
+            r += 1
+            if r >= 5:
+                r = 0
+                break
+
+            processes[r][3] = np.add(available_matrix, max_matrix)
+
+    # display result
+    print('result')
+    display_matrix(processes)
 
 
 if __name__ == "__main__":
